@@ -1,19 +1,87 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
 
 func main() {
 
 	//controls the program's state
 	var running bool = true
 
+	var userInput bool = true
+
 	var showEvenness bool = true
 
 	var showPrimeness bool = true
 
+	goal := 16
+
+	scanner := bufio.NewScanner(os.Stdin)
+
 	for running {
 
-		for x := 0; x <= 10; x++ {
+		userInput = true
+
+		//user input loop
+		for userInput {
+			fmt.Println("-----------------------------------------------------------------")
+			if showEvenness || showPrimeness {
+				fmt.Printf("Type a number to find it's")
+
+				//this is structured like this because I am simply making a basic program to learn Go
+
+				if showEvenness {
+					fmt.Printf(" evenness")
+				}
+
+				if showEvenness && showPrimeness {
+					fmt.Printf(" and")
+				}
+
+				if showPrimeness {
+					fmt.Printf(" primeness")
+				}
+
+				fmt.Printf(". You can also type %q or %q to disable/enable their output. Type %q to process.\nPlease type in the highest number you want to solve to: ", "even", "prime", "solve")
+
+				scanner.Scan()
+
+			} else {
+				fmt.Printf("You have disabled everything. Please re-enable one with %q or %q: ", "even", "prime")
+
+				scanner.Scan()
+			}
+
+			input := scanner.Text()
+
+			numberInput, _ := strconv.ParseInt(input, 10, 64)
+
+			if numberInput > 2 && (showPrimeness || showEvenness) {
+
+				goal = int(numberInput)
+
+				fmt.Printf("The number is now set to %q.\n", input)
+			} else {
+
+				if input == "even" {
+					showEvenness = !showEvenness
+				} else if input == "prime" {
+					showPrimeness = !showPrimeness
+				}
+
+				//exits the user input loop if one of the settings are enabled
+				if input == "solve" && (showPrimeness || showEvenness) {
+					userInput = false
+				}
+
+			}
+		}
+
+		for x := 0; x <= goal; x++ {
 
 			if showPrimeness {
 
