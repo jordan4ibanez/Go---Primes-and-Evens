@@ -46,7 +46,7 @@ func main() {
 					fmt.Printf(" primeness")
 				}
 
-				fmt.Printf(". You can also type %q or %q to disable/enable their output. Type %q to process.\nPlease type in the highest number you want to solve to: ", "even", "prime", "solve")
+				fmt.Printf(". You can also type %q or %q to disable/enable their output. Type %q to process. Type %q to exit.\nPlease type in the highest number you want to solve to: ", "even", "prime", "solve", "exit")
 
 				scanner.Scan()
 
@@ -59,6 +59,11 @@ func main() {
 			input := scanner.Text()
 
 			numberInput, _ := strconv.ParseInt(input, 10, 64)
+
+			//ignore everything and exit the program
+			if input == "exit" {
+				os.Exit(1337)
+			}
 
 			if numberInput > 2 && (showPrimeness || showEvenness) {
 
